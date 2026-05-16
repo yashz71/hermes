@@ -1,0 +1,66 @@
+<main class="login-container" role="main">
+    <mat-card class="login-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>AI Chatbot</mat-card-title>
+        <mat-card-subtitle>Secure Access Portal</mat-card-subtitle>
+      </mat-card-header>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+        <mat-card-content>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>E-mail</mat-label>
+            <input 
+              matInput 
+              type="email" 
+              formControlName="email" 
+              placeholder="name@example.com"
+              aria-required="true">
+            <mat-icon matSuffix>email</mat-icon>
+            @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
+              <mat-error>Please enter a valid business email</mat-error>
+            }
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input 
+              matInput 
+              [type]="hidePassword() ? 'password' : 'text'" 
+              formControlName="password"
+              aria-required="true">
+            <button 
+              type="button" 
+              mat-icon-button 
+              matSuffix 
+              (click)="togglePasswordVisibility()" 
+              [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'"
+              [attr.aria-pressed]="!hidePassword()">
+              <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+              <mat-error>Password must be at least 8 characters</mat-error>
+            }
+          </mat-form-field>
+        </mat-card-content>
+  
+        <mat-card-actions>
+          <button 
+            mat-flat-button 
+            class="submit-btn" 
+            type="submit"
+            [disabled]="loginForm.invalid">
+            AUTHORIZE
+          </button>
+             
+        </mat-card-actions>
+      </form>
+      <button 
+          mat-stroked-button 
+          color="primary" 
+          (click)="goToRegister()"
+            aria-label="Navigate to login page">
+          <mat-icon>register</mat-icon>
+          DON'T HAVE AN ACCOUNT? REGISTER
+        </button>    
+    </mat-card>
+  </main>

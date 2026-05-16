@@ -1,0 +1,147 @@
+<div class="app-layout">
+  @if (!isSidebarCollapsed()) {
+    <div class="sidebar-overlay" (click)="toggleSidebar()"></div>
+  }
+
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed()" role="complementary">
+    <div class="sidebar-header">
+      <button mat-icon-button (click)="toggleSidebar()" [attr.aria-label]="isSidebarCollapsed() ? 'Expand' : 'Collapse'">
+        <mat-icon>{{ isSidebarCollapsed() ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+      @if (!isSidebarCollapsed()) {
+        <button mat-flat-button color="primary" (click)="startNewChat()" class="new-chat-btn">
+          <mat-icon>add</mat-icon> <span>New Chat</span>
+        </button>
+      }
+    </div>
+
+    <nav class="conversation-list">
+      @for (chat of conversations(); track chat.message_threadId) {
+        <button 
+          class="nav-item" 
+          [class.active]="chat.message_threadId === chatService.currentThreadId()"
+          (click)="selectThread(chat.message_threadId)" 
+          [attr.aria-label]="'Open ' + chat.title">
+          <mat-icon>chat_bubble_outline</mat-icon>
+          @if (!isSidebarCollapsed()) {
+            <span class="chat-title" style="color: aliceblue;">{{ chat.title }}</span>
+          }
+        </button>
+      } @empty {
+        @if (!isSidebarCollapsed()) {
+          <div class="empty-state">No past sessions</div>
+        }
+      }
+    </nav>
+
+    <div class="user-footer">
+      <mat-icon color="primary">account_circle</mat-icon>
+      @if (!isSidebarCollapsed()) {
+        <span class="user-email">{{ user()?.email || 'Agent' }}</span>
+      }
+    </div>
+  </aside>
+
+  <main class="chat-viewport" role="main">
+    <div class="messages-container" #scrollFrame>
+      @if (messages().length === 0) {
+        <div class="welcome-hero">
+          <h1>Welcome, Agent {{ user()?.username || 'Guest' }}</h1>
+          <p>Your encrypted session is active. How can I help you today?</p>
+        </div>
+      } @else {
+        <div class="message-list">
+          @for (msg of messages(); track msg.id || $index) {
+            <div class="message-wrapper user">
+              <div class="message-bubble user-gradient">
+                {{ msg.humanMessage }}
+              </div>
+            </div>
+            
+            <div class="message-wrapper ai">
+              <div class="ai-avatar">
+                <mat-icon>terminal</mat-icon>
+              </div>
+              <div class="message-bubble ai-structured" [class.error]="msg.status === 'error'">
+                @if (msg.status === 'pending') {
+                  <div class="typing-indicator">
+                    <span></span><span></span><span></span>
+                  </div>
+                } @else if (msg.status === 'error') {
+                  <div class="error-msg">
+                    <mat-icon>error_outline</mat-icon>
+                    <span>Connection lost. Please try again.</span>
+                  </div>
+                } @else {
+                  <div class="formatted-text">
+                    {{ parseAiResponse(msg.aiMessage) }}
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <footer class="input-area">
+      <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="input-wrapper">
+        
+        <!-- Hidden file input -->
+        <input 
+          #fileInput
+          type="file"
+          accept="application/pdf"
+          (change)="onFileSelected($event)"
+          style="display: none"
+          aria-hidden="true"
+        />
+        
+        <mat-form-field appearance="outline" color="primary" class="chat-field">
+        
+          <input 
+            matInput 
+            formControlName="prompt" 
+            placeholder="Ask the AI agent..."
+            [disabled]="isWaiting()"
+            aria-label="Chat input"
+            autocomplete="off"
+          />
+        
+          <!-- 📎 Upload button -->
+          <button 
+            mat-icon-button
+            type="button"
+            matPrefix
+            (click)="triggerFilePicker()"
+            [disabled]="isWaiting()"
+            matTooltip="Attach PDF"
+            aria-label="Attach PDF file">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+        
+          <!-- 🚀 Send button -->
+          <button 
+            mat-icon-button 
+            matSuffix 
+            type="submit" 
+            [disabled]="chatForm.invalid || isWaiting()"
+            color="primary"
+            aria-label="Send message">
+            <mat-icon>{{ isWaiting() ? 'hourglass_empty' : 'send' }}</mat-icon>
+          </button>
+        
+        </mat-form-field>
+        
+        <!-- 📄 Selected file preview -->
+        @if (selectedFile()) {
+          <div class="file-preview" aria-live="polite">
+            📄 {{ selectedFile()?.name }}
+          </div>
+        }
+        
+          </form>
+        </footer>
+        
+  </main>
+</div>

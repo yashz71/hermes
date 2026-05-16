@@ -1,0 +1,85 @@
+<main class="dashboard-wrapper">
+  <header class="dashboard-header">
+    <h1>Market Insights <span class="badge">Real-time</span></h1>
+    <p>Financial Intelligence Agent - Gold Layer Monitor</p>
+  </header>
+
+  <div class="chart-container">
+    <div class="card-header">
+      <h2>Asset Performance</h2>
+      <button 
+          class="filter-btn" (click)="goToAgent()" >
+          go to agent
+        </button>
+      <div class="timeframe-filters">
+        @for (tf of timeframes; track tf) {
+          <button 
+            class="tf-btn" 
+            [class.active]="selectedTimeframe() === tf"
+            (click)="selectTimeframe(tf)">
+            {{ tf }}
+          </button>
+        }
+      </div>
+    </div>
+    <div class="market-selector">
+      <select #marketSelect (change)="chooseMarket(marketSelect.value)" class="custom-select">
+        @for (market of marketTypes; track market.value) {
+          <option [value]="market.value" [selected]="activeMarket() === market.value">
+            {{ market.label }}
+          </option>
+        }
+      </select>
+    </div>
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        
+        <input
+          type="text"
+          placeholder="Search assets..."
+          [value]="searchQuery()"
+          (input)="onSearchInput($event)"
+          class="asset-search-input"
+        />
+        
+        @if (searchQuery()) {
+          <button class="clear-btn" (click)="searchQuery.set('')">✕</button>
+        }
+      </div>
+    
+      <ul class="asset-list">
+        @for (asset of filteredAssets(); track asset) {
+          <li 
+            [class.active]="selectedAsset() === asset"
+            (click)="selectedAsset.set(asset)">
+            {{ asset }}
+          </li>
+        } @empty {
+          <li class="no-results">No assets found for "{{ searchQuery() }}"</li>
+        }
+      </ul>
+    </div>
+
+    @if (stockSeries().length > 0 && stockSeries()[0].data.length > 0) {
+      <apx-chart
+        [series]="stockSeries()"
+        [chart]="chartOptions.chart!"
+        [xaxis]="chartOptions.xaxis!"
+        [yaxis]="chartOptions.yaxis!"
+        [stroke]="chartOptions.stroke!"
+        [theme]="chartOptions.theme!"
+        [fill]="chartOptions.fill!"
+        [colors]="chartOptions.colors!"
+        [grid]="chartOptions.grid!"
+        [dataLabels]="chartOptions.dataLabels!"
+        [tooltip]="chartOptions.tooltip!"
+        [markers]="chartOptions.markers!"
+      ></apx-chart>
+    } @else {
+      <div class="loader">
+        <p>Awaiting Data Stream...</p>
+      </div>
+    }
+  </div>
+</main>

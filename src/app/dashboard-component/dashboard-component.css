@@ -1,0 +1,288 @@
+:host {
+    --bg-dark: #0f172a;
+    --card-bg: #1e293b;
+    --primary: #38bdf8;
+    --text-muted: #94a3b8;
+    display: block;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    padding: 2rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .badge {
+    font-size: 0.7rem;
+    background: rgba(56, 189, 248, 0.2);
+    color: var(--primary);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    vertical-align: middle;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .stat-card .label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .chart-container {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #10b981;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #10b981;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+  }
+  
+  .loader {
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+  }
+  ::ng-deep .apexcharts-toolbar svg {
+    fill: #94a3b8 !important; /* Matches your --text-muted color */
+  }
+  
+  ::ng-deep .apexcharts-toolbar svg:hover {
+    fill: #38bdf8 !important; /* Matches your --primary color */
+  }
+  /* Add to your existing CSS */
+
+.asset-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-btn:hover {
+  background: rgba(56, 189, 248, 0.1);
+  color: white;
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: #0f172a; /* Dark text on primary background for high contrast */
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+/* Layout for the header to separate title and timeframes */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Timeframe button styles */
+.timeframe-filters {
+  display: flex;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.tf-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tf-btn:hover {
+  color: white;
+}
+
+.tf-btn.active {
+  background: var(--primary);
+  color: #0f172a;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+/* Group the title and dropdown together */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Style the dropdown to look like a modern UI element */
+.custom-select {
+  appearance: none; /* Removes the default Mac/Windows styling */
+  background-color: rgba(15, 23, 42, 0.6);
+  color: var(--text-muted, #94a3b8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  
+  /* Add a custom custom dropdown arrow using a background image */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 0.65rem auto;
+}
+
+.custom-select:hover, .custom-select:focus {
+  border-color: var(--primary, #38bdf8);
+  color: white;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+}
+
+/* Style the dropdown options (Note: OS styling limits how much you can change <option> tags) */
+.custom-select option {
+  background-color: #0f172a; 
+  color: white;
+}
+.search-container {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1rem;
+
+  .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      color: #94a3b8;
+    }
+
+    .asset-search-input {
+      width: 100%;
+      padding: 10px 40px; /* Space for icon and clear button */
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: transparent;
+      color: white;
+      &:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+    }
+
+    .clear-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 12px;
+      
+      &:hover {
+        color: #64748b;
+      }
+    }
+  }
+
+  .asset-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    li {
+      padding: 10px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+
+      &:last-child { border-bottom: none; }
+      &:hover { background-color: var( --bg-dark); }
+      &.active { background-color:var(--primary); color:black ; font-weight: 500; }
+    }
+
+    .no-results {
+      padding: 12px;
+      color: #64748b;
+      text-align: center;
+      font-style: italic;
+    }
+  }
+}
