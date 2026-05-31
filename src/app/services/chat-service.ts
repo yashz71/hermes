@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Observable, catchError, tap, throwError } from 'rxjs';
-
 export interface Message {
   id?: string;
   threadId: string;
@@ -11,6 +10,7 @@ export interface Message {
   status: 'pending' | 'sent' | 'error';
   userId: number;
   createdAt?: Date;
+  download_url?: string | null;
 }
 export interface MessageHistory {
   message_id: string;
@@ -110,10 +110,18 @@ loadUserThreads(): void {
     this.http.post<Message>(`${this.apiUrl}/send`, formData, {
       withCredentials: true
     }).pipe(
-      tap((fullRecord) => {
+      tap((response: Message) => {
         this.messages.update((prev) =>
-          prev.map((m) => (m === tempMessage ? fullRecord : m))
+          prev.map((m) =>
+            m === tempMessage
+              ? {
+                  ...response,
+                  download_url: response.download_url ?? null,
+                }
+              : m
+          )
         );
+      
         this.isLoading.set(false);
       }),
       catchError((err) => {

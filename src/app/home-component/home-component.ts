@@ -8,6 +8,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../services/auth-service';
 import { ChatService } from '../services/chat-service';
 import { AnyCnameRecord } from 'node:dns';
+import { MarkdownModule } from 'ngx-markdown';
+
 
 @Component({
   selector: 'app-home-component',
@@ -18,6 +20,8 @@ import { AnyCnameRecord } from 'node:dns';
     MatInputModule,
     MatFormFieldModule,
     MatTooltipModule,
+    MarkdownModule,
+
   ],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css',
@@ -71,7 +75,7 @@ export class HomeComponent implements OnInit {
   parseAiResponse(raw: any): string {
     try {
       const parsed = JSON.parse(raw);
-      return parsed.answer || raw;
+      return parsed.answer&& parsed.download_url ||parsed.answer || raw;
     } catch {
       return raw;
     }

@@ -74,8 +74,22 @@
                   </div>
                 } @else {
                   <div class="formatted-text">
-                    {{ parseAiResponse(msg.aiMessage) }}
+                    <markdown [data]="msg.aiMessage"></markdown>                
                   </div>
+                  
+                  @if (msg.download_url) {
+                    <div class="download-section">
+                      <a 
+                        [href]="msg.download_url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="download-link">
+                        
+                        <mat-icon>download</mat-icon>
+                        Download Generated File
+                      </a>
+                    </div>
+                  }
                 }
               </div>
             </div>
@@ -99,7 +113,7 @@
         
         <mat-form-field appearance="outline" color="primary" class="chat-field">
         
-          <input 
+          <input style="color: aliceblue;"
             matInput 
             formControlName="prompt" 
             placeholder="Ask the AI agent..."

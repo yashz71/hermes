@@ -408,3 +408,22 @@
     0%, 100% { opacity: 0.3; }
     50% { opacity: 1; }
   }
+  .download-section {
+    margin-top: 12px;
+  }
+  
+  .download-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    color: #90caf9;
+    transition: 0.2s;
+  }
+  
+  .download-link:hover {
+    background: rgba(255,255,255,0.14);
+  }
