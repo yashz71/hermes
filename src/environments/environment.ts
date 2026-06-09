@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    BaseAPI:'http://localhost:3000'
+    BaseAPI:'https://agentproxy-heb2gjhbfranczd2.francecentral-01.azurewebsites.net'
 
 };
