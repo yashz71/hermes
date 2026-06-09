@@ -1,6 +1,8 @@
 {
   "name": "hermes",
   "version": "0.0.0",
+  "private": true,
+  "packageManager": "npm@10.9.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,8 +11,6 @@
     "test": "ng test",
     "serve:ssr:hermes": "node dist/hermes/server/server.mjs"
   },
-  "private": true,
-  "packageManager": "npm@10.9.3",
   "dependencies": {
     "@angular/cdk": "^21.2.3",
     "@angular/common": "^21.2.0",
@@ -43,11 +43,5 @@
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
-  },
-  "overrides": {
-    "esbuild": "0.21.5"
-  },
-  "resolutions": {
-    "esbuild": "0.21.5"
   }
 }
