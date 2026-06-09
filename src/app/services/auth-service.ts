@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 export interface User {
   userId: number;
   email: string;
   username?: string;
   password:string;
 
-}
+} 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly API_URL = 'http://localhost:3000/auth';
+  private readonly API_URL = `${environment.BaseAPI}/auth`;
 
   // Private signal for internal state
   private readonly _currentUser = signal<User | null>(null);

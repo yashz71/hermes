@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { io, Socket } from 'socket.io-client';
 import { HttpParams } from '@angular/common/http';
 import { StreamingService } from './streaming-service';
+import { environment } from '../../environments/environment';
+
 export interface MarketDataPoint {
   id: number;
   asset_name: string; // Unified name from dim_asset
@@ -23,7 +25,7 @@ export interface MarketOverview {
 })
 export class Charts {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3000/charts';
+  private readonly baseUrl = `${environment.BaseAPI}/charts`;
   private socket!: Socket;
   private readonly realtime = inject(StreamingService);
 

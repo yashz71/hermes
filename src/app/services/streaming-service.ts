@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -7,12 +8,13 @@ import { io, Socket } from 'socket.io-client';
 export class StreamingService {
 
   private socket: Socket;
-
+  private readonly socketUrl = environment.BaseAPI;
+  
   // Optional: connection state
   readonly connected = signal(false);
 
   constructor() {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io(this.socketUrl, {
       withCredentials: true
     });
 

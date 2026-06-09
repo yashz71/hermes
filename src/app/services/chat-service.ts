@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Observable, catchError, tap, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
+
 export interface Message {
   id?: string;
   threadId: string;
@@ -26,7 +28,7 @@ export interface MessageHistory {
 })
 export class ChatService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/message'; // Match your NestJS port
+  private readonly apiUrl = `${environment.BaseAPI}/message`; // Match your NestJS port
 
   // --- State Management via Signals ---
   readonly messages = signal<Message[]>([]);
